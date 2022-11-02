@@ -7,6 +7,7 @@ import com.codeborne.selenide.commands.SetValue;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Selenide.$x;
 import static org.openqa.selenium.remote.tracing.EventAttribute.setValue;
@@ -16,9 +17,12 @@ public class Authorization {
 
     AuthorizationUtils userEmail = new AuthorizationUtils();
 
-    @BeforeEach
-    void openWebSite() {
+    @BeforeAll
+    static void openWebSite() {
+        Configuration.browser = "Chrome";
+        Configuration.browserSize = "1920x1080";
         open("https://portal.dev01.russpass.dev/");
+
     }
 
     @AfterAll
@@ -31,14 +35,16 @@ public class Authorization {
     void successfulAuthorization() {
         Configuration.holdBrowserOpen = true;
 
+
 //        open ("https://portal.dev01.russpass.dev/");
 //        $("a[href='/support']").click();
-//          $x("//*[@href='/support']").click();
+//        $x("//*[@href='/support']").click();
+//        $x("//*[@class]//div[@class'']").setValue(AuthorizationUtils.EMAIL);
         $x("//*[text()='Вход']").click();
         $("#username").setValue(AuthorizationUtils.EMAIL);
-//        $x("//*[@class]//div[@class'']").setValue(AuthorizationUtils.EMAIL);;
-
-
+        $("#auth_ok").click();
+        $("#password").setValue(AuthorizationUtils.PASSWORD).pressEnter();
+        $("[class=profile-new__header]").shouldHave(text(AuthorizationUtils.EMAIL));
 
     }
 }
