@@ -2,6 +2,7 @@ package authorization;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
@@ -12,10 +13,12 @@ import static org.openqa.selenium.remote.tracing.EventAttribute.setValue;
 public class AuthorizationTest {
 
     static AuthorizationUtils authorizationUtils;
+    static SocialNetworkUtils socialNetworkUtils;
 
     @BeforeAll
     static void setUp(){
         authorizationUtils = new AuthorizationUtils();
+        socialNetworkUtils = new SocialNetworkUtils();
     }
 
     @BeforeEach
@@ -49,7 +52,14 @@ public class AuthorizationTest {
         authorizationUtils.authorizationByEmail();
        $("[class = 'button button--primary button--full-width cookie-banner-new__btn-ok']").click();
        $x("//div[text()='Выйти из профиля']").click();
-       $x("//span[text()='Вход']").shouldHave(text("Вход"));
+       $("div.header-new__end").lastChild().shouldHave(text("Вход"));
+
+    }
+
+    @Test
+    void authorizationByYandex() {
+        socialNetworkUtils.authorizationYandex();
+
     }
 
 }

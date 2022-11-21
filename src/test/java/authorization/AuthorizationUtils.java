@@ -3,8 +3,8 @@ package authorization;
 
 import com.codeborne.selenide.Configuration;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.files.DownloadActions.click;
 
 public class AuthorizationUtils {
     public static String EMAIL = "russ_test@ro.ru";
@@ -18,14 +18,15 @@ public class AuthorizationUtils {
 ////        $("a[href='/support']").click();
 ////        $x("//*[@href='/support']").click();
 ////        $x("//*[@class]//div[@class'']").setValue(AuthorizationUtils.EMAIL);
-        $x("//*[text()='Вход']").click();
+//        $x("//*[text()='Вход']").click();
+        $("div.header-new__end").lastChild().click();
         $("#username").setValue(AuthorizationUtils.EMAIL);
         $("#auth_ok").click();
         $("#password").setValue(AuthorizationUtils.PASSWORD).pressEnter();
     }
 
     void authorizationByNumber() {
-        $x("//*[text()='Вход']").click();
+        $("div.header-new__end").lastChild().click();
         $("#username").setValue(AuthorizationUtils.NUMBER);
         $("#auth_ok").click();
         $("#password").setValue(AuthorizationUtils.PASSWORD).pressEnter();
